@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgyxwbvmrw84t"]
+
+[ext_resource type="PackedScene" uid="uid://b0mhm8b3hc0bo" path="res://base_character/player.tscn" id="1_jquav"]
+[ext_resource type="SpriteFrames" uid="uid://bk4yrvk2t8duy" path="res://1/assets/main_character_frame.tres" id="2_kpk78"]
+[ext_resource type="Script" path="res://1/character_states/bubbled.gd" id="3_kg834"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4gnmj"]
+radius = 6.8
+
+[node name="Player" instance=ExtResource("1_jquav")]
+speed = 80.0
+default_jumps_count = 1
+jump_height = 64.0
+jump_time_to_peak = 0.9
+jump_time_to_descent = 0.7
+coyote_time = 0.15
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_4gnmj")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = ExtResource("2_kpk78")
+animation = &"idle"
+
+[node name="Bubbled" type="Node" parent="StateMachine" index="5"]
+script = ExtResource("3_kg834")

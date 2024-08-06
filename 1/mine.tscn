@@ -1,0 +1,171 @@
+[gd_scene load_steps=18 format=3 uid="uid://caxgxwbcbss1s"]
+
+[ext_resource type="Script" path="res://1/mine.gd" id="1_gu613"]
+[ext_resource type="Texture2D" uid="uid://byhpikc1oxe1u" path="res://1/assets/traps.png" id="2_80x32"]
+[ext_resource type="Texture2D" uid="uid://dogryryij16sw" path="res://1/assets/particle.png" id="3_vkqd2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkjtn"]
+atlas = ExtResource("2_80x32")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a57dp"]
+atlas = ExtResource("2_80x32")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6l2l"]
+atlas = ExtResource("2_80x32")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8dcxe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkjtn")
+}],
+"loop": true,
+"name": &"mine0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a57dp")
+}],
+"loop": true,
+"name": &"mine1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6l2l")
+}],
+"loop": true,
+"name": &"mine2",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_go2xt"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.45082, 0.819672, 1)
+colors = PackedColorArray(0.956863, 0.705882, 0.105882, 1, 0.901961, 0.282353, 0.180392, 1, 0.188235, 0.172549, 0.180392, 1, 0.188, 0.173, 0.18, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1bj47"]
+gradient = SubResource("Gradient_go2xt")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_blkh7"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(3, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 0)
+angle_min = -45.0
+angle_max = 45.0
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 60.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -5.0
+radial_accel_max = 5.0
+color_ramp = SubResource("GradientTexture1D_1bj47")
+turbulence_noise_scale = 1.0
+turbulence_influence_min = 0.03
+turbulence_influence_max = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ylblr"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.852459, 1)
+colors = PackedColorArray(0.241348, 0.209403, 0.175243, 1, 0.193717, 0.176353, 0.179861, 1, 0.188, 0.173, 0.18, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3xcw6"]
+gradient = SubResource("Gradient_ylblr")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_doyvy"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(10, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -15.0
+angle_max = 15.0
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -5.0
+radial_accel_max = 5.0
+scale_min = 0.6
+color_ramp = SubResource("GradientTexture1D_3xcw6")
+turbulence_noise_scale = 1.0
+turbulence_influence_min = 0.03
+turbulence_influence_max = 1.0
+
+[sub_resource type="Gradient" id="Gradient_tsx1t"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.844262, 1)
+colors = PackedColorArray(0.241348, 0.209403, 0.175243, 1, 0.188235, 0.172549, 0.180392, 1, 0.188, 0.173, 0.18, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jwf0v"]
+gradient = SubResource("Gradient_tsx1t")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_adpuk"]
+particle_flag_disable_z = true
+angle_min = -15.0
+angle_max = 15.0
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -5.0
+radial_accel_max = 5.0
+scale_min = 1.5
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_jwf0v")
+turbulence_noise_scale = 1.0
+turbulence_influence_min = 0.03
+turbulence_influence_max = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pwvc5"]
+radius = 4.0
+
+[node name="Mine" type="Node2D"]
+script = ExtResource("1_gu613")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8dcxe")
+animation = &"mine0"
+
+[node name="CPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, 7)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_blkh7")
+texture = ExtResource("3_vkqd2")
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 0
+draw_order = 0
+
+[node name="CPUParticles2D3" type="GPUParticles2D" parent="."]
+position = Vector2(0, 7)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_doyvy")
+texture = ExtResource("3_vkqd2")
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 0
+draw_order = 0
+
+[node name="CPUParticles2D2" type="GPUParticles2D" parent="."]
+position = Vector2(0, 7)
+emitting = false
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_adpuk")
+texture = ExtResource("3_vkqd2")
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 0
+draw_order = 0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_pwvc5")
