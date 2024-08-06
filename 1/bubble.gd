@@ -34,6 +34,9 @@ func on_player_entered(player):
 	animation_player.play("spinning")
 	
 	timer.start()
+	
+	await get_tree().physics_frame
+	area.monitoring = false
 
 
 func _process(delta: float) -> void:
@@ -43,9 +46,6 @@ func _process(delta: float) -> void:
 
 func hide_at_time():
 	get_tree().create_tween().tween_property(self, "modulate:a", 0.0, 0.5)
-	
-	await get_tree().physics_frame
-	area.monitoring = false
 	
 	await get_tree().create_timer(10.0).timeout
 	
